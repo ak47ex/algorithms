@@ -5,7 +5,7 @@ import java.util.Comparator;
 import static com.suenara.algorithms.common.utils.ArrayUtils.shuffle;
 import static com.suenara.algorithms.common.utils.ArrayUtils.swap;
 
-public class BaseQSort {
+public class TailRecursiveQSort {
 
     public static <T> void sort(T[] array, Comparator<T> comparator) {
         shuffle(array);
@@ -13,15 +13,14 @@ public class BaseQSort {
     }
 
     public static <T> void sort(T[] array, int start, int end, Comparator<T> comparator) {
-        if (start >= end) return;
-
-        int p = partition(array, start, end, comparator);
-
-        sort(array, start, p - 1, comparator);
-        sort(array, p + 1, end, comparator);
+        while (start < end) {
+            int p = partition(array, start, end, comparator);
+            sort(array, start, p - 1, comparator);
+            start = p + 1;
+        }
     }
 
-    protected static <T> int partition(T[] array, int start, int end, Comparator<T> comparator) {
+    private static <T> int partition(T[] array, int start, int end, Comparator<T> comparator) {
         T pivot = getPivot(array, start, end);
 
         int i = start;
@@ -38,8 +37,7 @@ public class BaseQSort {
         return j;
     }
 
-    protected static <T> T getPivot(T[] array, int start, int end) {
+    private static <T> T getPivot(T[] array, int start, int end) {
         return array[start];
     }
-
 }

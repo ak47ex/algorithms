@@ -1,23 +1,37 @@
 package com.suenara.algorithms.sort;
 
 import com.suenara.algorithms.sort.quickSort.BaseQSort;
+import com.suenara.algorithms.sort.quickSort.TailRecursiveQSort;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class SortingTest {
 
-    private static final int DATA_SIZE = 50000;
-    private static final int RETRY_COUNT = 10;
+    private static final int DATA_SIZE = 100000;
+    private static final int RETRY_COUNT = 50;
+
 
     private List<SortInfo> results = new LinkedList<>();
 
     private ArrayType currentType = ArrayType.RANDOM;
 
     public SortingTest() {
+        runTests();
+    }
 
+    private boolean isSortingValid(Integer[] data, Runnable sort) {
+        sort.run();
+        for (int i = 1; i < data.length; ++i) {
+            if (data[i] < data[i - 1]) return false;
+        }
+        return true;
+    }
+
+    private void runTests() {
         EstimateComparator<Integer> comparator = new EstimateComparator<>(Integer::compare);
         results.add(countAverage(() -> BaseQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Base Quick Sort"));
+        results.add(countAverage(() -> TailRecursiveQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Tail Recursive Quick Sort"));
 
         printResults();
     }
@@ -35,7 +49,7 @@ public class SortingTest {
         return new SortInfo(sortName, averageTime / 1000d, averageCompares);
     }
 
-    private Integer[] obtainArray(int size) {
+    public Integer[] obtainArray(int size) {
         switch (currentType) {
             case RANDOM: return createRandomArray(size);
             default: return new Integer[0];
