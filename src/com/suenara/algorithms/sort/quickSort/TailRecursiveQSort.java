@@ -15,8 +15,13 @@ public class TailRecursiveQSort {
     public static <T> void sort(T[] array, int start, int end, Comparator<T> comparator) {
         while (start < end) {
             int p = partition(array, start, end, comparator);
-            sort(array, start, p - 1, comparator);
-            start = p + 1;
+            if (p - start < end - p) {
+                sort(array, start, p - 1, comparator);
+                start = p + 1;
+            } else {
+                sort(array, p + 1, end, comparator);
+                end = p - 1;
+            }
         }
     }
 

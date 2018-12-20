@@ -2,14 +2,15 @@ package com.suenara.algorithms.sort;
 
 import com.suenara.algorithms.sort.quickSort.BaseQSort;
 import com.suenara.algorithms.sort.quickSort.TailRecursiveQSort;
+import com.suenara.algorithms.sort.quickSort.ThreeWayQSort;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class SortingTest {
 
-    private static final int DATA_SIZE = 100000;
-    private static final int RETRY_COUNT = 50;
+    private static final int DATA_SIZE = 1000000;
+    private static final int RETRY_COUNT = 10;
 
 
     private List<SortInfo> results = new LinkedList<>();
@@ -32,6 +33,7 @@ public class SortingTest {
         EstimateComparator<Integer> comparator = new EstimateComparator<>(Integer::compare);
         results.add(countAverage(() -> BaseQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Base Quick Sort"));
         results.add(countAverage(() -> TailRecursiveQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Tail Recursive Quick Sort"));
+        results.add(countAverage(() -> ThreeWayQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Three Way Quick Sort"));
 
         printResults();
     }
@@ -67,7 +69,7 @@ public class SortingTest {
     private void printResults() {
         System.out.println(String.format("Input array with size %s. Each sort will be runned for %s times.", DATA_SIZE, RETRY_COUNT));
         for (SortInfo info : results) {
-            System.out.println(String.format("%s. AverageTime: %10f. AverageCompares: %10d", info.name, info.avgTime, info.avgComparsions));
+            System.out.println(String.format("| %-25s | AverageTime: %10f | AverageCompares: %10d |", info.name, info.avgTime, info.avgComparsions));
         }
     }
 
