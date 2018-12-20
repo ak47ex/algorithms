@@ -54,6 +54,8 @@ public class SortingTest {
     public Integer[] obtainArray(int size) {
         switch (currentType) {
             case RANDOM: return createRandomArray(size);
+            case SORTED: return createSortedArray(size);
+            case REVERSED_SORTED: return createReverseSortedArray(size);
             default: return new Integer[0];
         }
     }
@@ -62,6 +64,22 @@ public class SortingTest {
         Integer[] array = new Integer[size];
         for (int i = 0; i < array.length; ++i) {
             array[i] = (int) (Math.random() * array.length);
+        }
+        return array;
+    }
+
+    private Integer[] createSortedArray(int size) {
+        Integer[] array = new Integer[size];
+        for (int i = 0; i < array.length; ++i) {
+            array[i] = i + 1;
+        }
+        return array;
+    }
+
+    private Integer[] createReverseSortedArray(int size) {
+        Integer[] array = new Integer[size];
+        for (int i = 0; i < array.length; ++i) {
+            array[i] = array.length - i;
         }
         return array;
     }
