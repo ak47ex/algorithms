@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SortingTest {
 
-    private static final int DATA_SIZE = 1000000;
+    private static final int DATA_SIZE = 10000;
     private static final int RETRY_COUNT = 10;
 
 
@@ -34,6 +34,10 @@ public class SortingTest {
         results.add(countAverage(() -> BaseQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Base Quick Sort"));
         results.add(countAverage(() -> TailRecursiveQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Tail Recursive Quick Sort"));
         results.add(countAverage(() -> ThreeWayQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Three Way Quick Sort"));
+        results.add(countAverage(() -> InsertionSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Insertion Sort"));
+        results.add(countAverage(() -> BubbleSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Bubble Sort"));
+        results.add(countAverage(() -> SelectionSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Selection Sort"));
+        results.add(countAverage(() -> ShellSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Shell Sort"));
 
         printResults();
     }
