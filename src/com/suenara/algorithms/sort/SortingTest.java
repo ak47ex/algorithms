@@ -21,10 +21,9 @@ public class SortingTest {
         runTests();
     }
 
-    private boolean isSortingValid(Integer[] data, Runnable sort) {
-        sort.run();
+    private <T> boolean isSortingValid(T[] data, Comparator<T> comparator) {
         for (int i = 1; i < data.length; ++i) {
-            if (data[i] < data[i - 1]) return false;
+            if (comparator.compare(data[i], data[i - 1]) < 0) return false;
         }
         return true;
     }
@@ -34,10 +33,11 @@ public class SortingTest {
         results.add(countAverage(() -> BaseQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Base Quick Sort"));
         results.add(countAverage(() -> TailRecursiveQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Tail Recursive Quick Sort"));
         results.add(countAverage(() -> ThreeWayQSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Three Way Quick Sort"));
+        results.add(countAverage(() -> RecursiveMergeSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Recursive Merge Sort"));
+        results.add(countAverage(() -> ShellSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Shell Sort"));
         results.add(countAverage(() -> InsertionSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Insertion Sort"));
         results.add(countAverage(() -> BubbleSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Bubble Sort"));
         results.add(countAverage(() -> SelectionSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Selection Sort"));
-        results.add(countAverage(() -> ShellSort.sort(obtainArray(DATA_SIZE), comparator), RETRY_COUNT, comparator, "Shell Sort"));
 
         printResults();
     }
